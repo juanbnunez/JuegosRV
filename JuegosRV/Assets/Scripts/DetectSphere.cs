@@ -1,16 +1,23 @@
 using UnityEngine;
-using UnityEngine.UI;  // Necesario para trabajar con UI
 
 public class DetectSphere : MonoBehaviour
 {
     public Color referenceColor;  // Color de referencia establecido en el Inspector
-    public Text sphereCountText;  // Referencia al texto UI para mostrar el conteo de esferas
+    public AudioClip sameColorClip;  // Clip de audio para el mismo color
+    public AudioClip differentColorClip;  // Clip de audio para diferente color
+
     private int sphereCount = 0;  // Contador de esferas
+    private AudioSource audioSource;  // Referencia al componente AudioSource
 
     private void Start()
     {
-        // Inicializa el texto con el conteo actual
-        UpdateSphereCountText();
+        // Obtén la referencia al AudioSource en el mismo objeto
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            // Si no hay un componente AudioSource, agrega uno
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -22,12 +29,18 @@ public class DetectSphere : MonoBehaviour
             if (ColorsAreSimilar(referenceColor, objectColor))
             {
                 sphereCount++;
-                UpdateSphereCountText();
+                Debug.Log("Esferas en la canasta: " + sphereCount);
                 Debug.Log("Un objeto del mismo color ha entrado en la canasta: " + other.gameObject.name);
+
+                // Reproduce el sonido para el mismo color
+                PlaySound(sameColorClip);
             }
             else
             {
                 Debug.Log("Un objeto de diferente color ha entrado en la canasta: " + other.gameObject.name);
+
+                // Reproduce el sonido para diferente color
+                PlaySound(differentColorClip);
             }
         }
         else
@@ -36,15 +49,18 @@ public class DetectSphere : MonoBehaviour
         }
     }
 
+    // Método para reproducir el sonido
+    private void PlaySound(AudioClip clip)
+    {
+        if (audioSource != null && clip != null)
+        {
+            audioSource.PlayOneShot(clip);
+        }
+    }
+
     // Método para comparar colores con cierto margen de tolerancia para diferencias menores
     private bool ColorsAreSimilar(Color a, Color b, float tolerance = 0.1f)
     {
         return Mathf.Abs(a.r - b.r) < tolerance && Mathf.Abs(a.g - b.g) < tolerance && Mathf.Abs(a.b - b.b) < tolerance;
-    }
-
-    // Método para actualizar el texto UI con el conteo de esferas
-    private void UpdateSphereCountText()
-    {
-        sphereCountText.text = "Esferas en la canasta: " + sphereCount;
     }
 }

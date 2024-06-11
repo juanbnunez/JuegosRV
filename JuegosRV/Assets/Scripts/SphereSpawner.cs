@@ -64,7 +64,7 @@ public class SphereSpawner : MonoBehaviour
             // Establecer el color de la esfera
             sphere.GetComponent<Renderer>().material.color = color;
     
-            Debug.Log("Esfera " + color.ToString() + " generada en: " + point);
+            //Debug.Log("Esfera " + color.ToString() + " generada en: " + point);
         }
         else
         {

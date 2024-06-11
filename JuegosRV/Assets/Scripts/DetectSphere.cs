@@ -1,21 +1,35 @@
+/*
+    INSTITUTO TECNOLÓGICO DE COSTA RICA CTLSC
+    ESCUELA DE INGENIERÍA EN COMPUTACIÓN
+    INTRODUCCIÓNA A LA REALIDAD VIRTUAL - I SEMESTRE 2024
+    PROYECTO: ENSEÑA A NIÑOS
+
+    INFORMACIÓN DEL CÓDIGO
+    CLASE PARA DETECTAR EL INGRESO DE UN OBJETO DENTRO DEL COLISIONADOR DE MALLA DENTRO DEL OBJETO QUE SE LE ASIGNE EL SCRIPT
+    E IDENTIFICAR SI SON DEL MISMO COLOR REPRODUCIENDO UN SONIDO SEGÚN LA IGUALDAD DE COLORES DE LOS OBJETOS
+    AUTOR: JUAN BAUTISTA NÚÑEZ PARRALES
+    ÚLTIMA MODIFICACIÓN: JUAN BAUTISTA NÚÑEZ PARRALES - FECHA DE MODIFICACIÓN: 10/06/2024
+ */
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DetectSphere : MonoBehaviour
 {
-    public Color referenceColor;  // Color de referencia establecido en el Inspector
+    public Color referenceColor;  // Color de referencia
     public AudioClip sameColorClip;  // Clip de audio para el mismo color
     public AudioClip differentColorClip;  // Clip de audio para diferente color
-    public AudioClip colorNameClip;
+    public AudioClip colorNameClip; // Clip de audio para color identificado
 
     private int sphereCount = 0;  // Contador de esferas
     private AudioSource audioSource;  // Referencia al componente AudioSource
     private HashSet<GameObject> enteredObjects = new HashSet<GameObject>();  // Almacena objetos que ya han entrado
 
+    // Método de inicio
     private void Start()
     {
-        // Obtén la referencia al AudioSource en el mismo objeto
+        // Referencia al AudioSource en el mismo objeto
         audioSource = GetComponent<AudioSource>();
         if (audioSource == null)
         {
@@ -24,8 +38,9 @@ public class DetectSphere : MonoBehaviour
         }
     }
 
+    // Método para reproducir sonidos si un objeto entra al objeto actual y compara el color de sus texturas
     private void OnTriggerEnter(Collider other)
-    {
+    {   
         if (!enteredObjects.Contains(other.gameObject))
         {
             enteredObjects.Add(other.gameObject);
@@ -58,6 +73,7 @@ public class DetectSphere : MonoBehaviour
         }
     }
 
+    // Método para reproducir el sonido cuando el otro termine
     private IEnumerator PlaySameColorAndNameClips()
     {
         // Reproduce el sonido para el mismo color

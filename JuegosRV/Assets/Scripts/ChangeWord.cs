@@ -13,6 +13,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Oculus;
 
 // Clase serializable para almacenar la asociación entre letra y prefab
 [System.Serializable]
@@ -35,7 +36,7 @@ public class ChangeWord : MonoBehaviour
     // Diccionario para acceso rápido a los prefabs por letra
     private Dictionary<char, GameObject> letterToPrefab;
     private List<GameObject> currentInstances; // Lista para almacenar los cubos generados actualmente
-    private int currentWordIndex; // Índice de la palabra actual en la lista
+    public int currentWordIndex; // Índice de la palabra actual en la lista
 
     // Métodos ---------------------------------------------------------------
 
@@ -152,13 +153,14 @@ public class ChangeWord : MonoBehaviour
 
         // Generar los cubos
         GenerateCube();
+    
     }
 
     // Método de actualización
     void Update()
     {
-        // Detectar si se ha presionado la tecla 'C'
-        if (Input.GetKeyDown(KeyCode.C))
+        // Detectar si se ha presionado la tecla 'A'
+        if (OVRInput.GetDown(OVRInput.Button.One))
         {
             ClearCubes(); // Borrar los cubos actuales
             currentWordIndex = (currentWordIndex + 1) % wordList.Count; // Avanzar al siguiente índice de palabra

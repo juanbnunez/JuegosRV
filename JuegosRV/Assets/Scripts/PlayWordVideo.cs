@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
+using Oculus;
 
 // Clase serializable para almacenar la asociación entre una palabra y video
 [System.Serializable]
@@ -85,19 +86,24 @@ public class PlayWordVideo : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Inicializar la lista de instancias actuales
-        currentInstances = new List<GameObject>();
-        currentWordIndex = 0;
+        // Detectar si se ha presionado la tecla 'C'
+        if (OVRInput.GetDown(OVRInput.Button.One))
+        {
+            // Inicializar la lista de instancias actuales
+            currentInstances = new List<GameObject>();
+            currentWordIndex = 0;
 
-        InitializeWordToVideo();
-        PlayCurrentVideo();
+            InitializeWordToVideo();
+            PlayCurrentVideo();
+        }
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         // Detectar si se ha presionado la tecla 'C'
-        if (Input.GetKeyDown(KeyCode.C))
+        if (OVRInput.GetDown(OVRInput.Button.One))
         {
             PlayNextVideo();
         }

@@ -7,7 +7,7 @@
     INFORMACIÓN DEL CÓDIGO
     CLASE PARA GENERAR LOS CUBOS EN LA PLATAFORMA INICIAL
     AUTOR: JUAN BAUTISTA NÚÑEZ PARRALES
-    ÚLTIMA MODIFICACIÓN: JUAN BAUTISTA NÚÑEZ PARRALES - FECHA DE MODIFICACIÓN: 10/06/2024
+    ÚLTIMA MODIFICACIÓN: JUAN BAUTISTA NÚÑEZ PARRALES - FECHA DE MODIFICACIÓN: 10/09/2024
  */
 
 using System.Collections;
@@ -30,6 +30,8 @@ public class ChangeWord : MonoBehaviour
     public float heightAdjustment; // Ajuste de altura
     public List<string> wordList = new List<string> { }; // Lista de palabras
 
+    private bool isPlayerInZone = false; // Variable para validar si el jugador está en la zona
+
     // Lista de asociaciones entre letras y prefabs
     public List<LetterPrefabAssociation> letterPrefabAssociations;
 
@@ -39,6 +41,35 @@ public class ChangeWord : MonoBehaviour
     public int currentWordIndex; // Índice de la palabra actual en la lista
 
     // Métodos ---------------------------------------------------------------
+
+    void Start()
+    {
+        currentInstances = new List<GameObject>(); // Inicializar la lista de instancias actuales
+        currentWordIndex = 0; // Iniciar con la primera palabra
+
+        // Inicializar el diccionario de asociaciones
+        InitializeLetterToPrefab();
+
+        // Generar los cubos
+        GenerateCube();
+
+    }
+
+    void Update()
+    {
+        // Solo ejecutar si el jugador está en la zona
+        if (isPlayerInZone)
+        {
+            // Detectar si se ha presionado la tecla 'A'
+            if (OVRInput.GetDown(OVRInput.Button.One))
+            {
+                ClearCubes(); // Borrar los cubos actuales
+                currentWordIndex = (currentWordIndex + 1) % wordList.Count; // Avanzar al siguiente índice de palabra
+                GenerateCube(); // Generar los cubos de la siguiente palabra
+            }
+        }
+    }
+
 
     // Método para buscar y añadir en una lista de listas, las letras de una palabra, dentro de una lista de palabras
     List<List<char>> SearchLetter()
@@ -142,29 +173,26 @@ public class ChangeWord : MonoBehaviour
         }
     }
 
-    // Método de inicio
-    void Start()
+    // Detectar si el jugador entra en la zona
+    void OnTriggerEnter(Collider other)
     {
-        currentInstances = new List<GameObject>(); // Inicializar la lista de instancias actuales
-        currentWordIndex = 0; // Iniciar con la primera palabra
-
-        // Inicializar el diccionario de asociaciones
-        InitializeLetterToPrefab();
-
-        // Generar los cubos
-        GenerateCube();
-    
-    }
-
-    // Método de actualización
-    void Update()
-    {
-        // Detectar si se ha presionado la tecla 'A'
-        if (OVRInput.GetDown(OVRInput.Button.One))
+        if (other.CompareTag("Player")) // Asegúrate de que el jugador tiene el tag "Player"
         {
-            ClearCubes(); // Borrar los cubos actuales
-            currentWordIndex = (currentWordIndex + 1) % wordList.Count; // Avanzar al siguiente índice de palabra
-            GenerateCube(); // Generar los cubos de la siguiente palabra
+            isPlayerInZone = true;
+            while(1 == 1){ Debug.LogWarning("Jugador en la zona"); }
+            
         }
     }
+
+    // Detectar si el jugador sale de la zona
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            isPlayerInZone = false;
+        }
+    }
+
+
+
 }

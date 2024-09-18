@@ -1,0 +1,85 @@
+using UnityEngine;
+using UnityEngine.Audio;
+
+public class SoundController : MonoBehaviour
+{
+    public AudioMixer internalMixer;
+    public AudioMixer externalMixer;
+    public GameObject structure; // Referencia al GameObject que representa el aula
+
+    private Transform player;
+    private Collider structureCollider; // Collider del aula
+
+    void Start()
+    {
+        player = transform; // Transform del jugador
+
+        // Obtener el Collider de la casa desde el GameObject del aula
+        if (structure != null)
+        {
+            structureCollider = structure.GetComponent<Collider>();
+
+            if (structureCollider == null)
+            {
+                Debug.LogError("El GameObject de la casa no tiene un Collider adjunto.");
+            }
+        }
+        else
+        {
+            Debug.LogError("El GameObject del aula no ha sido asignado en el Inspector.");
+        }
+
+        // Inicialmente, establecer el AudioMixer para sonidos externos
+        SetExternalAudioMixer();
+    }
+
+    // Detectar cuando el jugador entra en el área del aula
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player")) // Asegurarse de que sea el jugador quien entra
+        {
+            Debug.Log("El jugador ha entrado en el aula.");
+            SetInternalAudioMixer();
+        }
+    }
+
+    // Detectar cuando el jugador sale del área del aula
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player")) // Asegurarse de que sea el jugador quien sale
+        {
+            Debug.Log("El jugador ha salido del aula.");
+            SetExternalAudioMixer();
+        }
+    }
+
+    void SetInternalAudioMixer()
+    {
+        // Ajustar el volumen del AudioMixer interno
+        if (internalMixer != null)
+        {
+            internalMixer.SetFloat("Volume", 0f); // Establecer volumen en el mezclador
+        }
+
+        // Disminuir el volumen del AudioMixer externo para silenciar los sonidos externos
+        if (externalMixer != null)
+        {
+            externalMixer.SetFloat("Volume", -80f); // Disminuir volumen para silenciar sonidos externos
+        }
+    }
+
+    void SetExternalAudioMixer()
+    {
+        // Disminuir el volumen del AudioMixer interno para silenciar los sonidos internos
+        if (internalMixer != null)
+        {
+            internalMixer.SetFloat("Volume", -80f); // Disminuir volumen para silenciar sonidos internos
+        }
+
+        // Ajustar el volumen del AudioMixer externo
+        if (externalMixer != null)
+        {
+            externalMixer.SetFloat("Volume", 0f); // Ajustar volumen según sea necesario
+        }
+    }
+}

@@ -1,3 +1,15 @@
+/*
+    INSTITUTO TECNOLÓGICO DE COSTA RICA CTLSC
+    ESCUELA DE INGENIERÍA EN COMPUTACIÓN
+    INTRODUCCIÓNA A LA REALIDAD VIRTUAL - I SEMESTRE 2024
+    PROYECTO: ENSEÑA A NIÑOS
+
+    INFORMACIÓN DEL CÓDIGO
+    CLASE PARA REPRODUCIR UNA DICCIONARIO DE VIDEOS
+    AUTOR: JUAN BAUTISTA NÚÑEZ PARRALES
+    ÚLTIMA MODIFICACIÓN: JUAN BAUTISTA NÚÑEZ PARRALES - FECHA DE MODIFICACIÓN: 11/06/2024
+ */
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -102,7 +114,7 @@ public class PlayWordVideo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Detectar si se ha presionado la tecla 'C'
+        // Detectar si se ha presionado la tecla 'A'
         if (OVRInput.GetDown(OVRInput.Button.One))
         {
             PlayNextVideo();

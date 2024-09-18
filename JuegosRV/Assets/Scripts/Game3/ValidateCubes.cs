@@ -1,9 +1,21 @@
+/*
+    INSTITUTO TECNOLÓGICO DE COSTA RICA CTLSC
+    ESCUELA DE INGENIERÍA EN COMPUTACIÓN
+    INTRODUCCIÓNA A LA REALIDAD VIRTUAL - I SEMESTRE 2024
+    PROYECTO: ENSEÑA A NIÑOS
+
+    INFORMACIÓN DEL CÓDIGO
+    CLASE PARA DETECTAR SI UN OBJETO TOCO EL COLISIONADOR DE UN OBJETO
+    AUTOR: JUAN BAUTISTA NÚÑEZ PARRALES
+    ÚLTIMA MODIFICACIÓN: JUAN BAUTISTA NÚÑEZ PARRALES - FECHA DE MODIFICACIÓN: 11/06/2024
+ */
+
 using UnityEngine;
 using System.Collections.Generic;
 
 public class ValidateCubes : MonoBehaviour
 {
-    public List<GameObject> sockets; // Lista de sockets (asigna estos en el Inspector)
+    public List<GameObject> sockets; // Lista de sockets 
     public LayerMask objectLayer; // Capa de los objetos a detectar
 
     void Update()

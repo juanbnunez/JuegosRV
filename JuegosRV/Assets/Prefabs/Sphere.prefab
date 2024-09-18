@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 308593479831823457}
   - component: {fileID: 4713068922669123152}
   - component: {fileID: 150045953128210448}
+  - component: {fileID: 4828557606001581836}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -279,3 +280,16 @@ MonoBehaviour:
   _movementProvider: {fileID: 0}
   _handAligment: 1
   _handGrabPoses: []
+--- !u!114 &4828557606001581836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 149969274983601381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e55b7d795423c9f4aa6c156db1ccacd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fallThresholdY: 0.3

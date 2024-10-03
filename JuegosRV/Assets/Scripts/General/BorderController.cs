@@ -14,6 +14,7 @@ public class BorderController : MonoBehaviour
     public GameZone currentZone = GameZone.Lobby; // Zona actual en la que está el jugador
 
     private GameObject player; // Referencia al jugador
+
     private bool inputProcessed = false; // Bandera para manejar el input
 
     void Start()
@@ -24,6 +25,10 @@ public class BorderController : MonoBehaviour
         if (player == null)
         {
             Debug.LogError("No se encontró ningún objeto con el tag 'Player'.");
+        }
+        else 
+        {
+            Debug.Log("Jugador en la escena");
         }
     }
 
@@ -66,6 +71,7 @@ public class BorderController : MonoBehaviour
         }
     }
 
+    // cambiar esto para que detecte cuando entra y cuando sale bien 
     // Detectar cuando el jugador entra en una zona
     private void OnTriggerEnter(Collider other)
     {
@@ -97,6 +103,11 @@ public class BorderController : MonoBehaviour
                     break;
             }
         }
+        else
+        {
+            Debug.Log("Objeto ha entrado al trigger");
+        }
+                 
     }
 
     private void OnTriggerExit(Collider other)

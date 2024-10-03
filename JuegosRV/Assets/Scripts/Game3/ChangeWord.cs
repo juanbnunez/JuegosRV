@@ -57,18 +57,20 @@ public class ChangeWord : MonoBehaviour
 
     void Update()
     {
-        // Solo ejecutar si el jugador está en la zona
-        if (isPlayerInZone)
+        // Verificar todas las condiciones en una sola línea
+        if (isPlayerInZone && OVRInput.GetDown(OVRInput.Button.One) && wordList.Count > 0)
         {
-            // Detectar si se ha presionado la tecla 'A'
-            if (OVRInput.GetDown(OVRInput.Button.One))
-            {
-                ClearCubes(); // Borrar los cubos actuales
-                currentWordIndex = (currentWordIndex + 1) % wordList.Count; // Avanzar al siguiente índice de palabra
-                GenerateCube(); // Generar los cubos de la siguiente palabra
-            }
+            ClearCubes(); // Borrar los cubos actuales
+            currentWordIndex = (currentWordIndex + 1) % wordList.Count; // Avanzar al siguiente índice de palabra
+            GenerateCube(); // Generar los cubos de la siguiente palabra
+        }
+        else if (wordList.Count == 0)
+        {
+            // Solo mostrar advertencia si la lista de palabras está vacía
+            Debug.LogWarning("La lista de palabras está vacía.");
         }
     }
+
 
 
     // Método para buscar y añadir en una lista de listas, las letras de una palabra, dentro de una lista de palabras
@@ -176,11 +178,11 @@ public class ChangeWord : MonoBehaviour
     // Detectar si el jugador entra en la zona
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")) // Asegúrate de que el jugador tiene el tag "Player"
+        if (other.CompareTag("Player")) 
         {
             isPlayerInZone = true;
-            while(1 == 1){ Debug.LogWarning("Jugador en la zona"); }
-            
+            Debug.LogWarning("Jugador en la zona");
+
         }
     }
 
